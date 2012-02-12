@@ -59,10 +59,10 @@ def search(keyword,full=True):
 
 def hot():
 	''' read verycd hot res and keep update very day '''
-	url = 'http://www.verycd.com/'
+	url = 'http://www.verycd.com/sto/'
 	print 'fetching homepage ...'
 	home = httpfetch(url)
-	hotzone = re.compile(r'热门资源.*?</dl>',re.DOTALL).search(home).group()
+	hotzone = re.compile(r'今日热门.*?</dl>',re.DOTALL).search(home).group()
 	hot = re.compile(r'<a href="/topics/(\d+)/"[^>]*>(《.*?》)[^<]*</a>',re.DOTALL).findall(hotzone)
 	html = '<h2 style="color:red">每日热门资源</h2>\n'
 	for topic in hot:
@@ -169,7 +169,7 @@ def fetch(id,conn=conn,debug=False):
 		except:
 			continue
 
-	abstract = re.compile(r'<h1>.*?visit',re.DOTALL).findall(res)
+	abstract = re.compile(r'<h1.*?</ul>',re.DOTALL).findall(res)
 	if not abstract:
 		print res
 		if res == '' or '很抱歉' in res:
@@ -180,20 +180,22 @@ def fetch(id,conn=conn,debug=False):
 			return fetch(id,conn)
 	abstract = abstract[0]
     
-	title = re.compile(r'<h1>(.*?)</h1>',re.DOTALL).findall(abstract)
+	title = re.compile(r'<h1.*?</h1>',re.DOTALL).findall(abstract)
 	if title:
-		title=title[0]
+		title = title[0]
+		title = re.compile(r'<.*?>',re.DOTALL).sub('',title).strip()
 	else:
 		return
 	try:
-		status = re.compile(r'"requestWords">(.*?)<',re.DOTALL).search(abstract).group(1)
-		brief = re.compile(r'"font-weight:normal"><span>(.*?)</td>',re.DOTALL).search(abstract).group(1)
+		status = re.compile(r'状态.*?<span>(.*?)</span>.*?</li>',re.DOTALL).search(abstract).group(1)
+		brief = re.compile(r'摘要.*?<span>(.*?)</li>',re.DOTALL).search(abstract).group(1)
 		brief = re.compile(r'<.*?>',re.DOTALL).sub('',brief).strip()
-		pubtime = re.compile(r'"date-time">(.*?)</span>.*?"date-time">(.*?)</span>',re.DOTALL).findall(abstract)[0]
-		category1 = re.compile(r'分类.*?<td>(.*?)&nbsp;&nbsp;(.*?)&nbsp;&nbsp;',re.DOTALL).findall(abstract)[0]
+		pubtime = re.compile(r'date-time.*?>(.*?)</span>.*?date-time.*?>(.*?)</span>',re.DOTALL).findall(abstract)[0]
+		category1 = re.compile(r'分类.*?<a.*?>(.*?)</a>.*?<a.*?>(.*?)</a>',re.DOTALL).findall(abstract)[0]
 		category = ['','']
 		category[0] = re.compile(r'<.*?>',re.DOTALL).sub('',category1[0]).strip()
 		category[1] = re.compile(r'<.*?>',re.DOTALL).sub('',category1[1]).strip()
+		print category
 	
 #		res2 = re.compile(r'iptcomED2K"><!--eMule.*?<!--eMule end-->',re.DOTALL).findall(res)[0]
 	

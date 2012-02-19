@@ -63,7 +63,20 @@ $code:
 		<META NAME="keywords" CONTENT="VeryCD,精简版,emule,电骡,下载">
 		<META NAME="description" content="SimpleCD电骡资源页面：$rec.title；摘要：$rec.brief">
 		<LINK href="/static/main_02.css" type="text/css" rel="stylesheet">
-		<script language="javascript" type="text/javascript" src="/static/common.js"></script> 
+		<script language="javascript" type="text/javascript" src="/static/common.js"></script>
+				<script type="text/javascript">
+		
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-28994156-1']);
+			_gaq.push(['_trackPageview']);
+
+			(function() {
+				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+		
+		</script>
 	</HEAD>
 
 $if fl:
@@ -99,16 +112,6 @@ $else:
 			<tr><td>$:format(rec.content)</td></tr>
 			</table>
 		</div>
-		<script type="text/javascript">
-			  var _gaq = _gaq || [];
-			  _gaq.push(['_setAccount', 'UA-10627564-5']);
-			  _gaq.push(['_trackPageview']);
-			  (function() {
-			    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-			    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-			    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
-			  })();
-		</script>
 	</div>
-	<BODY>
+	</BODY>
 </HTML>

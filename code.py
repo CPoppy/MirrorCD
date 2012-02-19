@@ -16,7 +16,7 @@ import time
 
 web.config.debug = False
 
-path = os.path.dirname(os.path.realpath(sys.argv[0]))
+path = os.path.dirname(os.path.realpath(__file__))
 
 db = web.database(dbn='sqlite', db='verycd.sqlite3.db')
 #customdb = web.database(dbn='sqlite',db='custom.sqlite3.db')

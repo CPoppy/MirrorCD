@@ -18,7 +18,7 @@ from Queue import Queue
 
 from download import httpfetch
 
-path = os.path.dirname(os.path.realpath(sys.argv[0]))
+path = os.path.dirname(os.path.realpath(__file__))
 conn = sqlite3.connect(path+'/verycd.sqlite3.db')
 conn.text_factory = str
 q = Queue()

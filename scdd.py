@@ -82,17 +82,18 @@ class MyDaemon(Daemon):
 				timeofday =  time.mktime(time.gmtime())%(86400/6)
 #				if timeofday>68400 and timeofday < 68410:
 				if time.mktime(time.gmtime())%(3600*4)<10:
-					url = 'http://www.verycd.com/'
-					print 'fetching homepage ...'
-					home = httpfetch(url)
-					hotzone = re.compile(r'热门资源.*?</dl>',re.DOTALL).search(home).group()
-					hot = re.compile(r'<a href="/topics/(\d+)/"[^>]*>(《.*?》)[^<]*</a>',re.DOTALL).findall(hotzone)
-					html = '<h2 style="color:red">每日热门资源</h2>\n'
-					for topic in hot:
-						print 'fetching hot topic',topic[0],'...'
-						self.q.put(topic[0])
-						html += '&nbsp;<a target="_parent" href="/?id=%s">%s</a>&nbsp;\n' % topic
-					open(self.path+'/static/hot.html','w').write(html)
+					fetchvc.hot()
+					# url = 'http://www.verycd.com/'
+					# print 'fetching homepage ...'
+					# home = httpfetch(url)
+					# hotzone = re.compile(r'热门资源.*?</dl>',re.DOTALL).search(home).group()
+					# hot = re.compile(r'<a href="/topics/(\d+)/"[^>]*>(《.*?》)[^<]*</a>',re.DOTALL).findall(hotzone)
+					# html = '<h2 style="color:red">每日热门资源</h2>\n'
+					# for topic in hot:
+						# print 'fetching hot topic',topic[0],'...'
+						# self.q.put(topic[0])
+						# html += '&nbsp;<a target="_parent" href="/?id=%s">%s</a>&nbsp;\n' % topic
+					# open(self.path+'/static/hot.html','w').write(html)
 				# update 20 whole pages at gmt 19:10
 				if timeofday>69000 and timeofday < 69010:
 					urlbase = 'http://www.verycd.com/sto/~all/page'
